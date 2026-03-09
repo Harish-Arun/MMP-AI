@@ -1,0 +1,2 @@
+Follow instructions in [speckit.specify.prompt.md](file:///e%3A/NatWest/Engineering%20Practice/langchain/mmp-ai/.github/prompts/speckit.specify.prompt.md).
+create a component that will have a connection with network drive and the moment u get files in network drive, you'd upload it in the s3 bucket. Now when you have uploaded a file in s3 bucket it should send some notification to our mmp-ai-engine that will trigger our workflow.
