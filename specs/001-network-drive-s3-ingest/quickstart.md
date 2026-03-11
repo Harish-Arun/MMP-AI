@@ -12,7 +12,8 @@ This guide gets the ingestion service running locally end-to-end using LocalStac
 |---|---|---|
 | Docker Desktop | ≥ 4.x | https://www.docker.com/products/docker-desktop |
 | Python | 3.11+ | https://www.python.org/downloads/ |
-| `awslocal` | latest | `pip install awscli-local` |
+| AWS CLI v2 | latest | https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html |
+| `awslocal` (optional shorthand) | latest | `pip install awscli-local` |
 
 Ensure Docker Desktop is running before proceeding.
 
@@ -141,6 +142,11 @@ Expected output:
 
 Verify:
 ```cmd
+rem Option A: aws CLI (explicit LocalStack endpoint)
+aws --endpoint-url=http://localhost:4566 s3 ls
+aws --endpoint-url=http://localhost:4566 lambda list-functions
+
+rem Option B: awslocal shorthand
 awslocal s3 ls
 awslocal lambda list-functions
 ```
@@ -182,6 +188,10 @@ When the mmp-ai-engine is deployed (feature 002-004), update `ENGINE_REST_URL` i
 
 3. Verify the Lambda now has the new URL:
    ```cmd
+   rem Option A: aws CLI
+   aws --endpoint-url=http://localhost:4566 lambda get-function-configuration --function-name mmp-ai-s3-trigger --query "Environment.Variables"
+
+   rem Option B: awslocal
    awslocal lambda get-function-configuration --function-name mmp-ai-s3-trigger --query "Environment.Variables"
    ```
 
@@ -244,6 +254,10 @@ And in the mock engine window:
 
 Verify S3:
 ```cmd
+rem Option A: aws CLI
+aws --endpoint-url=http://localhost:4566 s3 ls s3://mmp-ai-documents/ingest/
+
+rem Option B: awslocal
 awslocal s3 ls s3://mmp-ai-documents/ingest/
 ```
 
