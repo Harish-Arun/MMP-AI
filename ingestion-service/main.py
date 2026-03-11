@@ -63,6 +63,11 @@ async def poll_loop(watcher: SFTPWatcher, uploader: S3Uploader, store: UploadRec
                 span.set_attribute("s3.key", record.s3_key)
                 span.set_attribute("file.sha256", record.sha256_hash)
                 _logger.info("file_processed", filename=file_event.filename, s3_key=record.s3_key)
+                _logger.info(
+                    "handoff_complete",
+                    filename=file_event.filename,
+                    detail="downstream handled by Lambda",
+                )
             except FileDisappearedError as exc:
                 span.set_attribute("error", True)
                 span.set_attribute("error.type", "FileDisappearedError")

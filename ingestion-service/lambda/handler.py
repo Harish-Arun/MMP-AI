@@ -31,8 +31,10 @@ _BACKOFF_MULTIPLIER: float = 2.0
 
 
 def _is_retryable(exc: BaseException) -> bool:
-    """Retry on 5xx responses and timeouts; do NOT retry on 4xx."""
+    """Retry on 5xx responses, timeouts, and transient network/connectivity errors; do NOT retry on 4xx."""
     if isinstance(exc, httpx.TimeoutException):
+        return True
+    if isinstance(exc, httpx.ConnectError | httpx.NetworkError):
         return True
     if isinstance(exc, httpx.HTTPStatusError):
         return exc.response.status_code >= 500
@@ -114,6 +116,11 @@ def lambda_handler(event: dict[str, Any], context: Any) -> dict[str, Any]:
         response.raise_for_status()
         return response
 
-    response = _post()
+    try:
+        response = _post()
+    except Exception as exc:
+        log.error("engine_notify_failed", error_type=type(exc).__name__, error=str(exc))
+        raise
+
     log.info("engine_notified", status_code=response.status_code)
     return {"statusCode": response.status_code}

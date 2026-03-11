@@ -316,3 +316,4 @@ docker stop sftp-test && docker rm sftp-test
 | File not detected after 60s | Extension not in allowlist | Check `EXTENSION_ALLOWLIST` in `.env` |
 | `InternalError: Version cannot be updated if old one is not running` | Lambda in `Pending` state when DLQ update runs | Fixed — `function_active` waiter added before step 6 |
 | No traces in Jaeger | OTel collector not running or endpoint blank | Start observability stack (Step 1b); check `OTEL_EXPORTER_OTLP_ENDPOINT` in `.env` |
+| Lambda logs show both success and error around same time | Logs are interleaved from multiple warm Lambda containers/invocations | Correlate by `request_id`; use `engine_notify_failed` vs `engine_notified` events to determine final result per invocation |
