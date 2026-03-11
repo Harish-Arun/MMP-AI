@@ -90,7 +90,7 @@ Operations staff can see which files have been detected, uploaded, and triggered
 
 - **FileEvent**: Represents a file detected on the network drive. Attributes: file name, source path, file size, detection timestamp, write-completion timestamp
 - **UploadRecord**: Tracks the outcome of an S3 upload attempt. Attributes: source file reference, S3 bucket, S3 key, upload timestamp, status (pending / success / failed), retry count
-- **WorkflowTriggerNotification**: Represents the message sent to mmp-ai-engine. Attributes: S3 file reference, original file name, file metadata, notification timestamp, delivery status
+- **WorkflowTriggerNotification**: Represents the message sent to mmp-ai-engine via the Lambda bridge. Attributes: `s3_bucket`, `s3_key`, `filename`, `file_size_bytes`, `detection_timestamp`, `sha256_hash` (authoritative field contract defined in `contracts/lambda-to-engine.md`; `notification_timestamp` and `delivery_status` are not part of the wire contract)
 
 ## Success Criteria *(mandatory)*
 

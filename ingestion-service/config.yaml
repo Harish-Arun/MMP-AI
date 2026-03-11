@@ -1,0 +1,10 @@
+sftp_poll_interval_s: 30
+extension_allowlist:
+  - ".pdf"
+sftp_max_reconnect_attempts: 5
+s3_max_upload_retries: 5
+backoff_base: 2.0
+s3_key_prefix: "ingest"
+aws_region: "eu-west-2"
+health_port: 8080
+mongo_db_name: "mmp_ai"

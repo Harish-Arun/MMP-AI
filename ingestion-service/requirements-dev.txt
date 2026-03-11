@@ -1,0 +1,7 @@
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-bdd>=7.0.0
+pytest-cov>=4.1.0
+moto[s3]>=5.0.0
+mongomock-motor>=0.0.21
+ruff>=0.3.0
